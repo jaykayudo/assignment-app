@@ -1,0 +1,14 @@
+.full-width{
+    width: 100%;
+    min-height: 100%;
+}
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h1{
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 50px;
+}

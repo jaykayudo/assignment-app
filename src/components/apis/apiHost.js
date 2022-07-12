@@ -1,0 +1,1 @@
+export const Host = "http://assignment-app-josh.herokuapp.com"
