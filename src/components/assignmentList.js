@@ -36,7 +36,7 @@ class AssignmentList extends Component {
       return (<Link to={`/${item.id}`}><List.Item>{item.title}</List.Item></Link>);
     }
     state = { posts:[], loaded:false } 
-    render() { 
+    render() {
         return (
           <AuthContext.Consumer>
             {(ctx)=>{

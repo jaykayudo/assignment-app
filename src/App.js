@@ -12,11 +12,22 @@ import axios from 'axios';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userToken, setUserToken] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(()=>{
     const storeUserLoggedInInfomation = localStorage.getItem("token")
     if(storeUserLoggedInInfomation){
-      setIsLoggedIn(true);
+    axios.post("http://127.0.0.1:8000/getuserbytoken/",{token:storeUserLoggedInInfomation},{headers:{'Authorization':`${storeUserLoggedInInfomation}`}}).then(res=>{
+        setIsLoggedIn(true);
+        setUser(res.data.user);
+        setUserToken("Token "+res.data.key)
+        localStorage.setItem('user',JSON.stringify(res.data.user))
+        localStorage.setItem('token',"Token "+res.data.key)
+      }).catch(err=>{
+        setIsLoggedIn(false);
+      })
+      
     }
   },[])
 
@@ -31,8 +42,8 @@ function App() {
     <AuthContext.Provider value={
       {
         isLoggedIn: isLoggedIn,
-        userToken: localStorage.getItem("token"),
-        user: JSON.parse(localStorage.getItem('user')),
+        userToken: userToken,
+        user: user,
         logUserOut: LogUserOut,
         logUserIn:()=>(setIsLoggedIn(true))
     }

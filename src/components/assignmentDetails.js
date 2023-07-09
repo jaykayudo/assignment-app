@@ -65,6 +65,7 @@ const PostDetails = () => {
     const context = useContext(AuthContext);
     const navigate = useNavigate();
     useEffect(()=>{
+      console.log(context.user)
       if(!context.user.is_student){
         message.error({
           content:'Only students are allowed to answer the assignment',

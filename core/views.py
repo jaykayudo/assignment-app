@@ -10,7 +10,7 @@ from .permissions import IsStaffOrFuckOff, IsStudentOrFuckOff
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-
+from rest_framework.authtoken.models import Token
 
 from core.serializers import AssignmentSerializer, GradedAssignmentSerializer, UserSerializer, StudentSerializer, TeacherSerializer
 from .models import Assignment, GradedAssignment, Student, User
@@ -96,3 +96,17 @@ class ValidateTakenAssignment(APIView):
             if data.id == x['assignment']:
                 return JsonResponse({"taken":True})
         return JsonResponse({"taken":False})
+
+class GetUserByToken(APIView):
+    def post(self,request,*args,**kwargs):
+        # token = data['token'][5:]
+        # print(token)
+        # print(Token.objects.all().values('key'))
+        # print(Token.objects.filter(key = token).exists())
+        # try:
+        #     user = Token.objects.get(key = token).user
+        # except Exception as err:
+        #     print(err)
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        serailzed_user = UserSerializer(request.user)
+        return Response({"key":request.auth.key,"user":serailzed_user.data})
